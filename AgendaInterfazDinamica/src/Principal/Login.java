@@ -29,6 +29,7 @@ public class Login extends JFrame {
 	private JPasswordField passwordField;
 	private JButton btnEntrar;
 	private JButton btnSalir;
+	private JButton btnRegistrarUsuario;
 
 	/**
 	 * Launch the application.
@@ -97,6 +98,11 @@ public class Login extends JFrame {
 		btnSalir.addMouseListener(new BtnSalirMouseListener());
 		btnSalir.setBounds(324, 338, 89, 23);
 		contentPane.add(btnSalir);
+		
+		btnRegistrarUsuario = new JButton("Registrar");
+		btnRegistrarUsuario.addMouseListener(new BtnRegistrarUsuarioMouseListener());
+		btnRegistrarUsuario.setBounds(37, 335, 96, 23);
+		contentPane.add(btnRegistrarUsuario);
 
 		lblNewLabel.addFocusListener(new FocusAdapter() {
 			@Override
@@ -170,7 +176,7 @@ public class Login extends JFrame {
 		btnEntrar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				if(txtUsuario.getText().equalsIgnoreCase("juan") && passwordField.getText().equalsIgnoreCase("1234")) {
+				if(IODatos.comprobarLogin(txtUsuario.getText(), passwordField.getText())) {
 					//passwordField.getText().equalsIgnoreCase("1234");
 					Agenda nueva = new Agenda();
 					nueva.setVisible(true);
@@ -200,5 +206,12 @@ public class Login extends JFrame {
 			dispose();
 		}
 	}
-
+	private class BtnRegistrarUsuarioMouseListener extends MouseAdapter {
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			Registro r = new Registro();
+			r.setVisible(true);
+			dispose();
+		}
+	}
 }
