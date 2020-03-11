@@ -24,6 +24,7 @@ import javax.swing.border.EmptyBorder;
 
 public class Agenda extends JFrame {
 
+	//Ejemplo
 	private JPanel contentPane;
 	private JLabel lblNombre;
 	private JLabel lblTelefono;
