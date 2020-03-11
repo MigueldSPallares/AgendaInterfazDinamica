@@ -24,7 +24,10 @@ public class IODatos {
 			Scanner leer = new Scanner(fichero);
 			while (leer.hasNext()) {
 				String[] linea = leer.nextLine().split("-");
-				
+				if(linea[0].equalsIgnoreCase(usu) && linea[1].equalsIgnoreCase(pass)) {
+					passwordCorrecto = true;
+					break;
+				}
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -32,7 +35,7 @@ public class IODatos {
 		}
 		return passwordCorrecto;
 	}
-	public static void guadarNuevoUsuario(String nombre, String pass) {
+	public static void guardarNuevoUsuario(String nombre, String pass) {
 		File f = new File("Usuarios.txt");
 		FileWriter fw = null;
 		PrintWriter pw = null;

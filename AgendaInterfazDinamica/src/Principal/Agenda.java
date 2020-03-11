@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -44,6 +45,7 @@ public class Agenda extends JFrame {
 	private JLabel lblAgenda;
 	private JButton btnEliminar;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JList list;
 	private JButton btnEditar;
 
 	/**
@@ -94,10 +96,6 @@ public class Agenda extends JFrame {
 		contentPane.add(textTelefono);
 		textTelefono.setColumns(10);
 
-		textArea = new JTextPane();
-		textArea.setBounds(308, 100, 220, 200);
-		contentPane.add(textArea);
-
 		lblContactos = new JLabel("Mostrar contactos");
 		lblContactos.setBounds(373, 75, 95, 14);
 		contentPane.add(lblContactos);
@@ -120,21 +118,16 @@ public class Agenda extends JFrame {
 		btnGuardar.addMouseListener(new BtnGuardarMouseListener());
 		btnGuardar.setBounds(28, 259, 89, 23);
 		contentPane.add(btnGuardar);
-
-		comboBox = new JComboBox();
 		modeloComboBox = new DefaultComboBoxModel();
 		modeloComboBox.addElement("Contactos:");
-		comboBox.setModel(modeloComboBox);
-		comboBox.setBounds(140, 307, 111, 56);
-		contentPane.add(comboBox);
 
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.addMouseListener(new BtnBuscarMouseListener());
-		btnBuscar.setBounds(28, 306, 89, 23);
+		btnBuscar.setBounds(357, 306, 111, 23);
 		contentPane.add(btnBuscar);
 
 		lblInformacion = new JLabel("Informacion");
-		lblInformacion.setBounds(283, 310, 268, 14);
+		lblInformacion.setBounds(28, 310, 265, 14);
 		contentPane.add(lblInformacion);
 
 		lblAgenda = new JLabel("AGENDA");
@@ -144,13 +137,18 @@ public class Agenda extends JFrame {
 
 		btnEliminar = new JButton("Eliminar");
 		btnEliminar.addMouseListener(new BtnEliminarMouseListener());
-		btnEliminar.setBounds(28, 340, 89, 23);
+		btnEliminar.setBounds(357, 344, 111, 23);
 		contentPane.add(btnEliminar);
 
 		btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(new BtnNewButtonActionListener());
 		btnEditar.setBounds(140, 259, 111, 23);
 		contentPane.add(btnEditar);
+		
+		list = new JList();
+		list.setBounds(357, 103, 111, 179);
+		contentPane.add(list);
+
 	}
 
 	private class BtnGuardarMouseListener extends MouseAdapter {
