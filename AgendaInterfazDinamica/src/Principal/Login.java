@@ -127,8 +127,6 @@ public class Login extends JFrame {
 			}
 		});
 		
-		
-		
 		passwordField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent arg0) {
@@ -158,9 +156,9 @@ public class Login extends JFrame {
 			public void keyReleased(KeyEvent arg0) {
 				comprobarBoton();
 				if(arg0.getKeyCode() == KeyEvent.VK_ENTER) {
-					if(txtUsuario.getText().equalsIgnoreCase("juan") && passwordField.getText().equalsIgnoreCase("1234")) {
+					if(IODatos.comprobarLogin(txtUsuario.getText(), passwordField.getText())) {
 						//passwordField.getText().equalsIgnoreCase("1234");
-						Agenda nueva = new Agenda();
+						Agenda nueva = new Agenda(txtUsuario.getText());
 						nueva.setVisible(true);
 						dispose();
 					}else {
@@ -178,10 +176,9 @@ public class Login extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				if(IODatos.comprobarLogin(txtUsuario.getText(), passwordField.getText())) {
 					//passwordField.getText().equalsIgnoreCase("1234");
-					Agenda nueva = new Agenda();
+					Agenda nueva = new Agenda(txtUsuario.getText());
 					nueva.setVisible(true);
 					dispose();
-					IODatos.cargarContacto(txtUsuario.getText());
 				}else {
 					JOptionPane.showMessageDialog(null, "Usuario Incorrecto");
 					txtUsuario.setText("Usuario");

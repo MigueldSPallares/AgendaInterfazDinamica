@@ -44,6 +44,14 @@ public class IODatos {
 		File f = new File("Usuarios.txt");
 		FileWriter fw = null;
 		PrintWriter pw = null;
+		if(!f.exists()) {
+			try {
+				f.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		try {
 			fw = new FileWriter(f, true);
 			pw = new PrintWriter(fw);
@@ -62,7 +70,7 @@ public class IODatos {
 		}
 	}
 	public static void guardarContactos(String usuario, ArrayList<Contactos> vContactos) {
-		File f = new File(usuario+".txt");
+		File f = new File(usuario+".dat");
 		FileOutputStream fo = null;
 		ObjectOutputStream escribir = null;
 		if(!f.exists()) {
@@ -95,12 +103,13 @@ public class IODatos {
 	}
 	public static ArrayList<Contactos> cargarContacto(String usuario){
 		ArrayList<Contactos> vContactos = new ArrayList<Contactos>();
-		File f = new File(usuario+".txt");
+		File f = new File(usuario+".dat");
 		FileInputStream fi = null;
 		ObjectInputStream leer = null;
 		if(!f.exists()) {
 			try {
 				f.createNewFile();
+				return vContactos;
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -117,14 +126,16 @@ public class IODatos {
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			try {
-				fi.close();
-				leer.close();
+				if (fi!=null)
+					fi.close();
+				if (leer!=null)
+					leer.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
