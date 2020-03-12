@@ -181,6 +181,7 @@ public class Login extends JFrame {
 					Agenda nueva = new Agenda();
 					nueva.setVisible(true);
 					dispose();
+					IODatos.cargarContacto(txtUsuario.getText());
 				}else {
 					JOptionPane.showMessageDialog(null, "Usuario Incorrecto");
 					txtUsuario.setText("Usuario");

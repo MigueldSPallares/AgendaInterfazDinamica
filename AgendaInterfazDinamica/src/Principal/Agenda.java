@@ -97,7 +97,7 @@ public class Agenda extends JFrame {
 		textTelefono.setColumns(10);
 
 		lblContactos = new JLabel("Mostrar contactos");
-		lblContactos.setBounds(373, 75, 95, 14);
+		lblContactos.setBounds(353, 75, 89, 14);
 		contentPane.add(lblContactos);
 
 		lblSexo = new JLabel("Sexo:");
@@ -123,7 +123,7 @@ public class Agenda extends JFrame {
 
 		btnBuscar = new JButton("Buscar");
 		btnBuscar.addMouseListener(new BtnBuscarMouseListener());
-		btnBuscar.setBounds(357, 306, 111, 23);
+		btnBuscar.setBounds(353, 306, 111, 23);
 		contentPane.add(btnBuscar);
 
 		lblInformacion = new JLabel("Informacion");
@@ -137,7 +137,7 @@ public class Agenda extends JFrame {
 
 		btnEliminar = new JButton("Eliminar");
 		btnEliminar.addMouseListener(new BtnEliminarMouseListener());
-		btnEliminar.setBounds(357, 344, 111, 23);
+		btnEliminar.setBounds(353, 345, 111, 23);
 		contentPane.add(btnEliminar);
 
 		btnEditar = new JButton("Editar");
@@ -146,7 +146,7 @@ public class Agenda extends JFrame {
 		contentPane.add(btnEditar);
 		
 		list = new JList();
-		list.setBounds(357, 103, 111, 179);
+		list.setBounds(317, 103, 151, 179);
 		contentPane.add(list);
 
 	}
@@ -168,21 +168,7 @@ public class Agenda extends JFrame {
 			
 			textNombre.setText("");
 			textTelefono.setText("");
-
-			String salida = "";
-			for (Contactos contactos : vContactos) {
-				if (contactos != null) {
-					salida += "\n" + contactos.toString();
-				}
-			}
-			textArea.setText(salida);
-			modeloComboBox.removeAllElements();
-			modeloComboBox.addElement("Contactos:");
-			for (Contactos contactos : vContactos) {
-				if (contactos != null) {
-					modeloComboBox.addElement(contactos.getNombre());
-				}
-			}
+			
 		}
 	}
 
@@ -235,21 +221,6 @@ public class Agenda extends JFrame {
 			}
 			textNombre.setText("");
 			textTelefono.setText("");
-			
-			String salida = "";
-			for (Contactos contactos : vContactos) {
-				if (contactos != null) {
-					salida += "\n" + contactos.toString();
-				}
-			}
-			textArea.setText(salida);
-			modeloComboBox.removeAllElements();
-			modeloComboBox.addElement("Contactos:");
-			for (Contactos contactos : vContactos) {
-				if (contactos != null) {
-					modeloComboBox.addElement(contactos.getNombre());
-				}
-			}
 		}
 	}
 

@@ -21,6 +21,7 @@ public class Registro extends JFrame {
 	private JTextField textNombre;
 	private JPasswordField txtPass;
 	private JButton btnRegistrar;
+	private JButton btnSalir;
 
 	/**
 	 * Launch the application.
@@ -70,13 +71,26 @@ public class Registro extends JFrame {
 		btnRegistrar.addMouseListener(new BtnRegistrarMouseListener());
 		btnRegistrar.setBounds(245, 189, 89, 23);
 		contentPane.add(btnRegistrar);
+		
+		btnSalir = new JButton("Salir");
+		btnSalir.addMouseListener(new BtnSalirMouseListener());
+		btnSalir.setBounds(48, 189, 89, 23);
+		contentPane.add(btnSalir);
 	}
 	private class BtnRegistrarMouseListener extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			if(textNombre.getText().equalsIgnoreCase("") && txtPass.getText().equalsIgnoreCase("")) {
+			if(!textNombre.getText().equalsIgnoreCase("") && !txtPass.getText().equalsIgnoreCase("")) {
 				IODatos.guardarNuevoUsuario(textNombre.getText(), txtPass.getText());
 			}
+		}
+	}
+	private class BtnSalirMouseListener extends MouseAdapter {
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			Login l = new Login();
+			l.setVisible(true);
+			dispose();
 		}
 	}
 }
