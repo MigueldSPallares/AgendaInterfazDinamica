@@ -1,6 +1,8 @@
 package Principal;
 
-public class Contactos {
+import java.io.Serializable;
+
+public class Contactos implements Serializable{
 	private String nombre;
 	private String telefono;
 	private boolean sexo;

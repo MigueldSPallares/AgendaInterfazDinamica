@@ -98,6 +98,7 @@ public class Agenda extends JFrame {
 		textNombre.setBounds(108, 100, 111, 20);
 		contentPane.add(textNombre);
 		textNombre.setColumns(10);
+		textNombre.requestFocus();
 
 		textTelefono = new JTextField();
 		textTelefono.setBounds(108, 139, 111, 20);
@@ -149,7 +150,7 @@ public class Agenda extends JFrame {
 		contentPane.add(btnEditar);
 		
 		list = new JList();
-		listModel = new DefaultListModel();
+		listModel = new DefaultListModel<String>();
 		list.setModel(listModel);
 		list.setBounds(342, 102, 151, 179);
 		contentPane.add(list);
@@ -165,9 +166,13 @@ public class Agenda extends JFrame {
 		txtBuscar.setBounds(353, 71, 111, 20);
 		contentPane.add(txtBuscar);
 		txtBuscar.setColumns(10);
-
+		actualizarVector(vContactos);
 	}
-
+	private void actualizarVector(ArrayList<Contactos> vContactos) {
+		for (int i = 0; i < vContactos.size(); i++) {
+			listModel.addElement(vContactos.get(i).getNombre());
+		}
+	}
 	private class BtnGuardarMouseListener extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent e) {
@@ -182,10 +187,10 @@ public class Agenda extends JFrame {
 				}
 			}
 			vContactos.add(cont);
-			
+			listModel.addElement(textNombre.getText());
 			textNombre.setText("");
 			textTelefono.setText("");
-			listModel.addElement(textNombre.getText());
+			
 		}
 	}
 
@@ -242,6 +247,13 @@ public class Agenda extends JFrame {
 		public void focusGained(FocusEvent arg0) {
 			if(txtBuscar.getText().equalsIgnoreCase("Buscar")) {
 				txtBuscar.setText("");
+			}
+		}
+		
+		@Override
+		public void focusLost(FocusEvent arg0) {
+			if(txtBuscar.getText().equalsIgnoreCase("")) {
+				txtBuscar.setText("Buscar");
 			}
 		}
 	}
