@@ -257,4 +257,13 @@ public class Agenda extends JFrame {
 			}
 		}
 	}
+	private void buscarElementos() {
+		for (int i = 0; i < vContactos.size(); i++) {
+			if() {
+				if() {
+					
+				}
+			}
+		}
+	}
 }
