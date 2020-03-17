@@ -12,15 +12,20 @@ import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.ListModel;
 import javax.swing.border.EmptyBorder;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class Agenda extends JFrame {
 
@@ -39,34 +44,39 @@ public class Agenda extends JFrame {
 	private DefaultComboBoxModel modeloComboBox;
 	private ArrayList<Contactos> vContactos;
 	private JComboBox comboBox;
-	private JButton btnBuscar;
 	private JLabel lblInformacion;
 	private JLabel lblAgenda;
 	private JButton btnEliminar;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JList list;
 	private JButton btnEditar;
+	private String usuario;
+	private JButton btnCerrarSesion;
+	private DefaultListModel listModel;
+	private JTextField txtBuscar;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Agenda frame = new Agenda();
+					Agenda frame = new Agenda("");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
 	 */
-	public Agenda() {
-		vContactos = new ArrayList<Contactos>();
+	public Agenda(String usuario) {
+		this.usuario = usuario;
+		vContactos = IODatos.cargarContacto(usuario);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 594, 446);
@@ -88,18 +98,15 @@ public class Agenda extends JFrame {
 		textNombre.setBounds(108, 100, 111, 20);
 		contentPane.add(textNombre);
 		textNombre.setColumns(10);
+		textNombre.requestFocus();
 
 		textTelefono = new JTextField();
 		textTelefono.setBounds(108, 139, 111, 20);
 		contentPane.add(textTelefono);
 		textTelefono.setColumns(10);
 
-		textArea = new JTextPane();
-		textArea.setBounds(308, 100, 220, 200);
-		contentPane.add(textArea);
-
 		lblContactos = new JLabel("Mostrar contactos");
-		lblContactos.setBounds(373, 75, 95, 14);
+		lblContactos.setBounds(243, 103, 89, 14);
 		contentPane.add(lblContactos);
 
 		lblSexo = new JLabel("Sexo:");
@@ -120,21 +127,11 @@ public class Agenda extends JFrame {
 		btnGuardar.addMouseListener(new BtnGuardarMouseListener());
 		btnGuardar.setBounds(28, 259, 89, 23);
 		contentPane.add(btnGuardar);
-
-		comboBox = new JComboBox();
 		modeloComboBox = new DefaultComboBoxModel();
 		modeloComboBox.addElement("Contactos:");
-		comboBox.setModel(modeloComboBox);
-		comboBox.setBounds(140, 307, 111, 56);
-		contentPane.add(comboBox);
-
-		btnBuscar = new JButton("Buscar");
-		btnBuscar.addMouseListener(new BtnBuscarMouseListener());
-		btnBuscar.setBounds(28, 306, 89, 23);
-		contentPane.add(btnBuscar);
 
 		lblInformacion = new JLabel("Informacion");
-		lblInformacion.setBounds(283, 310, 268, 14);
+		lblInformacion.setBounds(28, 310, 265, 14);
 		contentPane.add(lblInformacion);
 
 		lblAgenda = new JLabel("AGENDA");
@@ -144,15 +141,38 @@ public class Agenda extends JFrame {
 
 		btnEliminar = new JButton("Eliminar");
 		btnEliminar.addMouseListener(new BtnEliminarMouseListener());
-		btnEliminar.setBounds(28, 340, 89, 23);
+		btnEliminar.setBounds(353, 345, 111, 23);
 		contentPane.add(btnEliminar);
 
 		btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(new BtnNewButtonActionListener());
 		btnEditar.setBounds(140, 259, 111, 23);
 		contentPane.add(btnEditar);
+		
+		list = new JList();
+		listModel = new DefaultListModel<String>();
+		list.setModel(listModel);
+		list.setBounds(342, 102, 151, 179);
+		contentPane.add(list);
+		
+		btnCerrarSesion = new JButton("Cerrar sesion");
+		btnCerrarSesion.addMouseListener(new BtnCerrarSesionMouseListener());
+		btnCerrarSesion.setBounds(28, 345, 103, 23);
+		contentPane.add(btnCerrarSesion);
+		
+		txtBuscar = new JTextField();
+		txtBuscar.addFocusListener(new TxtBuscarFocusListener());
+		txtBuscar.setText("Buscar");
+		txtBuscar.setBounds(353, 71, 111, 20);
+		contentPane.add(txtBuscar);
+		txtBuscar.setColumns(10);
+		actualizarVector(vContactos);
 	}
-
+	private void actualizarVector(ArrayList<Contactos> vContactos) {
+		for (int i = 0; i < vContactos.size(); i++) {
+			listModel.addElement(vContactos.get(i).getNombre());
+		}
+	}
 	private class BtnGuardarMouseListener extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent e) {
@@ -167,36 +187,10 @@ public class Agenda extends JFrame {
 				}
 			}
 			vContactos.add(cont);
-			
+			listModel.addElement(textNombre.getText());
 			textNombre.setText("");
 			textTelefono.setText("");
-
-			String salida = "";
-			for (Contactos contactos : vContactos) {
-				if (contactos != null) {
-					salida += "\n" + contactos.toString();
-				}
-			}
-			textArea.setText(salida);
-			modeloComboBox.removeAllElements();
-			modeloComboBox.addElement("Contactos:");
-			for (Contactos contactos : vContactos) {
-				if (contactos != null) {
-					modeloComboBox.addElement(contactos.getNombre());
-				}
-			}
-		}
-	}
-
-	private class BtnBuscarMouseListener extends MouseAdapter {
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			try {
-				int i = comboBox.getSelectedIndex();
-				lblInformacion.setText(vContactos.get(i-1).toString());
-			} catch (Exception e2) {
-				// TODO: handle exception
-			}
+			
 		}
 	}
 
@@ -237,22 +231,30 @@ public class Agenda extends JFrame {
 			}
 			textNombre.setText("");
 			textTelefono.setText("");
-			
-			String salida = "";
-			for (Contactos contactos : vContactos) {
-				if (contactos != null) {
-					salida += "\n" + contactos.toString();
-				}
+		}
+	}
+	private class BtnCerrarSesionMouseListener extends MouseAdapter {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			Login l = new Login();
+			l.setVisible(true);
+			dispose();
+			IODatos.guardarContactos(usuario, vContactos);
+		}
+	}
+	private class TxtBuscarFocusListener extends FocusAdapter {
+		@Override
+		public void focusGained(FocusEvent arg0) {
+			if(txtBuscar.getText().equalsIgnoreCase("Buscar")) {
+				txtBuscar.setText("");
 			}
-			textArea.setText(salida);
-			modeloComboBox.removeAllElements();
-			modeloComboBox.addElement("Contactos:");
-			for (Contactos contactos : vContactos) {
-				if (contactos != null) {
-					modeloComboBox.addElement(contactos.getNombre());
-				}
+		}
+		
+		@Override
+		public void focusLost(FocusEvent arg0) {
+			if(txtBuscar.getText().equalsIgnoreCase("")) {
+				txtBuscar.setText("Buscar");
 			}
 		}
 	}
-
 }
