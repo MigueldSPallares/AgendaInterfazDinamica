@@ -26,6 +26,8 @@ import javax.swing.ListModel;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Agenda extends JFrame {
 
@@ -161,6 +163,7 @@ public class Agenda extends JFrame {
 		contentPane.add(btnCerrarSesion);
 		
 		txtBuscar = new JTextField();
+		txtBuscar.addKeyListener(new TxtBuscarKeyListener());
 		txtBuscar.addFocusListener(new TxtBuscarFocusListener());
 		txtBuscar.setText("Buscar");
 		txtBuscar.setBounds(353, 71, 111, 20);
@@ -257,12 +260,19 @@ public class Agenda extends JFrame {
 			}
 		}
 	}
+	private class TxtBuscarKeyListener extends KeyAdapter {
+		@Override
+		public void keyTyped(KeyEvent e) {
+			listModel.removeAllElements();
+			buscarElementos();
+		}
+	}
 	private void buscarElementos() {
 		for (int i = 0; i < vContactos.size(); i++) {
-			if() {
-				if() {
-					
-				}
+			if(txtBuscar.getText().length()<vContactos.get(i).getNombre().length() && 
+					vContactos.get(i).getNombre().substring(0, txtBuscar.getText().length()).equalsIgnoreCase(txtBuscar.getText())) {
+				listModel.addElement(vContactos.get(i).getNombre());
+				
 			}
 		}
 	}

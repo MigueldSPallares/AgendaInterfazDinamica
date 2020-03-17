@@ -83,7 +83,7 @@ public class Login extends JFrame {
 		contentPane.add(lblContrasea);
 
 		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\alumno\\eclipse-workspace\\Contrase\u00F1aInterfaz\\icono.png"));
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\migue\\git\\AgendaInterfazDinamica\\descarga.png"));
 		lblNewLabel.setBounds(111, 39, 224, 221);
 		contentPane.add(lblNewLabel);
 		lblNewLabel.setFocusable(true);
